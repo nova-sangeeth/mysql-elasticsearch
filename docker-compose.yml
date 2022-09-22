@@ -1,0 +1,75 @@
+version: '3.7'
+
+services:
+  mariadb:
+    # image: docker.io/bitnami/mariadb:10.8
+    build:
+      context: mariadb-docker
+      dockerfile: mariadb.dockerfile
+    ports:
+      - "3306:3306"
+    volumes:
+      - 'mariadb_data:/bitnami/mariadb'
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    healthcheck:
+      test: [ 'CMD', '/opt/bitnami/scripts/mariadb/healthcheck.sh' ]
+      interval: 15s
+      timeout: 5s
+      retries: 6
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.4.2
+    container_name: elasticsearch
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data/
+    environment:
+      - bootstrap.memory_lock=true
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xmx256m -Xms256m"
+      - ELASTICSEARCH_USERNAME=userone
+      - ELASTICSEARCH_PASSWORD=password1
+      - xpack.security.enabled=false
+
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - '9200:9200'
+      - '9300:9300'
+
+  logstash:
+    # image: logstash:8.4.2
+    build:
+      context: ./elk-docker
+      dockerfile: logstash.dockerfile
+    container_name: logstash
+
+    # volumes:
+    # - ./logstash-configuration/:/logstash_dir
+    # command: logstash -f /logstash_dir/logstash.conf
+    depends_on:
+      - elasticsearch
+    ports:
+      - '9600:9600'
+    environment:
+      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.4.2
+    container_name: kibana
+    ports:
+      - '5601:5601'
+    environment:
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+      - ELASTICSEARCH_USERNAME=userone
+      - ELASTICSEARCH_PASSWORD=password1
+    depends_on:
+      - elasticsearch
+
+volumes:
+  mariadb_data:
+    driver: local
+  elasticsearch_data:
+    driver: local
