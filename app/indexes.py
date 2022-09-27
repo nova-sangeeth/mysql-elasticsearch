@@ -6,6 +6,7 @@ my_index_schema = {
         "properties": {
             "field": {"type": "text"},
             "field": {"type": "integer"},
+            "field": {"type": "boolean"},
         }
     }
 }
@@ -34,6 +35,18 @@ index_schema_2 = {
             "address": {"type": "text"},
             "age": {"type": "integer"},
             "phone_number": {"type": "integer"},
+        }
+    }
+}
+
+index_schema_3 = {
+    "mappings": {
+        "properties": {
+            "id": {"type": "integer"},
+            "language": {"type": "text"},
+            "experience": {"type": "integer"},
+            "framework": {"type": "text"},
+            "available": {"type": "boolean"},
         }
     }
 }
