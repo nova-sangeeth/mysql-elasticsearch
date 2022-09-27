@@ -9,11 +9,13 @@ from main import es_client
 index_name_1 = "my_index_1"
 index_name_2 = "my_index_2"
 
-test = True
+iteration = 0
+limit = 5
+sleep_time = 3
 
-while test:
-
-    time.sleep(5)
+while iteration != limit:
+    iteration += 1
+    time.sleep(sleep_time)
     # temporary data
     data_1 = data_gen(limit=500)
     data_2 = data_gen_2(limit=500)
@@ -25,3 +27,6 @@ while test:
 
     for document in data_2:
         es_client.index(index=index_name_2, body=document)
+
+
+print(f"Data Ingestion Complete after {limit} iterations")
