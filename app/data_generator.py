@@ -30,17 +30,13 @@ def data_gen_2(limit: int) -> List:
     return temp_data_store
 
 
-def data_gen_3(limit: int) -> List:
-    """
-    document = {
-          "id": {"type":"integer"},
-          "age": {"type":"integer"},
-          "phone": {"type":"integer"},
-      }
-    """
-    result = []
+def data_gen_sqla(limit: int) -> List:
+    temp_data_store = []
     for i in range(limit):
-        document = {"id": i}
-        result.append(document)
-
-    return result
+        document = {
+            "name": "".join(random.choices(string.ascii_letters, k=15)),
+            "address": "".join(random.choices(string.ascii_letters, k=15)),
+            "age": random.randint(a=10, b=99),
+        }
+        temp_data_store.append(document)
+    return temp_data_store
