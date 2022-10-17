@@ -68,6 +68,13 @@ services:
     depends_on:
       - elasticsearch
 
+  airflow:
+    image: puckle/docker-airflow
+    container_name: airflow
+    ports:
+      - "8080:8080"
+    
+
 volumes:
   mariadb_data:
     driver: local
