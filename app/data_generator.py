@@ -32,7 +32,7 @@ def data_gen_2(limit: int) -> List:
 
 def data_gen_sqla(limit: int) -> List:
     temp_data_store = []
-    for i in range(limit):
+    for _ in range(limit):
         document = {
             "name": "".join(random.choices(string.ascii_letters, k=15)),
             "address": "".join(random.choices(string.ascii_letters, k=15)),
