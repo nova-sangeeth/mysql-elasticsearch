@@ -6,6 +6,7 @@ from db import engine, Session
 
 Base = declarative_base()
 
+
 class Elasticsearch(Base):
 
     __tablename__ = "elasticsearch"
@@ -25,10 +26,10 @@ Base.metadata.create_all(bind=engine)
 session = Session()
 
 
-
 data = data_gen_sqla(limit=25)
 for i in data:
-    elasticsearch_object = Elasticsearch(name=i["name"], address=i["address"], age=i["age"])
+    elasticsearch_object = Elasticsearch(
+        name=i["name"], address=i["address"], age=i["age"]
+    )
     session.add_all([elasticsearch_object])
     session.commit()
-

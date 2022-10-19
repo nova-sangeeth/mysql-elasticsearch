@@ -12,7 +12,8 @@ query_body = {"query": {"match": {"client_name": "two"}}}
 
 def search_queries(index_name: str, query_string: str) -> List:
     search_response = es_client.search(
-        index=index_name, query={"term": {"age": query_string}}
+        index=index_name,
+        query={"term": {"age": query_string}}
         # index=index_name, query={"match": {"name": query_string}}
     )
 
