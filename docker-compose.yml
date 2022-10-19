@@ -26,7 +26,7 @@ services:
     environment:
       - bootstrap.memory_lock=true
       - discovery.type=single-node
-      - "ES_JAVA_OPTS=-Xmx256m -Xms256m"  # set JVM initial and maximum memory limit
+      - "ES_JAVA_OPTS=-Xmx256m -Xms256m" # set JVM initial and maximum memory limit
       - ELASTICSEARCH_USERNAME=userone
       - ELASTICSEARCH_PASSWORD=password1
       - xpack.security.enabled=false
@@ -73,7 +73,6 @@ services:
     container_name: airflow
     ports:
       - "8080:8080"
-    
 
 volumes:
   mariadb_data:
